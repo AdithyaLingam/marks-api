@@ -1,0 +1,29 @@
+name: Daily Auto Commit
+
+on:
+  schedule:
+    # Runs daily at 03:30 UTC
+    - cron: "/5 * * * *"
+  workflow_dispatch:  # Allows manual run
+
+jobs:
+  auto-commit:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write  # Allow writing to the repo
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Append Timestamp by 24f1002079@ds.study.iitm.ac.in
+        run: |
+          echo "Last update: $(date -u)" >> daily-log.txt
+
+      - name: Commit Changes
+        run: |
+          git config --local user.email "adithyalingams473@gmail.com"
+          git config --local user.name "AdithyaLingam"
+          git add daily-log.txt
+          git commit -m "Daily update: $(date -u) [skip ci]" || echo "Nothing to commit"
+          git push
