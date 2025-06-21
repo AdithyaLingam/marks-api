@@ -2,15 +2,14 @@ name: Daily Auto Commit
 
 on:
   schedule:
-    # Runs daily at 03:30 UTC
-    - cron: "/5 * * * *"
-  workflow_dispatch:  # Allows manual run
+    - cron: "30 3 * * *"  # Runs daily at 03:30 UTC
+  workflow_dispatch:
 
 jobs:
   auto-commit:
     runs-on: ubuntu-latest
     permissions:
-      contents: write  # Allow writing to the repo
+      contents: write
 
     steps:
       - name: Checkout Repository
